@@ -1,0 +1,61 @@
+.controls {
+    height: 20vh;
+}
+
+
+.gameboard {
+    height: 70vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.board {
+    height: 100%;
+    width: 30%;
+}
+
+.top-row {
+    height: 20vh;
+    width: 100%;
+    display: flex; 
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.middle-row {
+    height: 20vh;
+    width: 100%;
+    display: flex; 
+    flex-direction: row;
+    flex-wrap: nowrap;
+    border-top: 1px black solid;
+}
+
+.bottom-row {
+    height: 20vh;
+    display: flex; 
+    flex-direction: row;
+    flex-wrap: nowrap;
+    border-top: 1px black solid;
+}
+
+.left {
+    height: 100%;
+    width: 33%;
+    border-right: 1px black solid;
+}
+
+.middle {
+    height: 100%;
+    width: 33%;
+    border-right: 1px black solid;
+    border-left: 1px black solid;
+}
+
+.right {
+    height: 100%;
+    width: 33%;
+    border-left: 1px black solid;
+}
