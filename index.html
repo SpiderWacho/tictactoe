@@ -9,19 +9,44 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="controls">
-        <h1>Tic Tac Toe</h1>
+    <div id="endGame"></div>
+    <div class="intro">
+        <div class="numberOfPlayers">
+        <button class="selectPlayers" id="btnSinglePlayer">Player Vs IA</button>
+        <button class="selectPlayers" id="btnTwoPlayer">Player vs Player</button>
+        </div>
+        <div class="names">
+            <div class="divSinglePlayer">
+            <form>
+                <input type="text" id="singlePlayerName">
+            </form>
+            </div>
+            <div class="divTwoPlayer">
+                <form>
+                    <label for="twoPlayer1Name">Name of Player 1</label>
+                    <input type="text" id="twoPlayer1Name">
+                    <label for="twoPlayer2Name">Name of Player 2</label>
+                    <input type="text" id="twoPlayer2Name">
+                    <input type="submit" id="submitNames">
+                </form>
+                </div>
+        </div>
     </div>
-    <div class="gameboard">
-        <div class="board">
-            <div class="top-row">
-                <div class="left" id="top-left"></div><div class="middle" id="top-middle"></div><div class="right" id="top-right"></div>
-            </div>
-            <div class="middle-row">
-                <div class="left" id="middle-left"></div><div class="middle" id="middle-middle"></div><div class="right" id="middle-right"></div>
-            </div>
-            <div class="bottom-row">
-                <div class="left" id="bottom-left"></div><div class="middle" id="bottom-middle"></div><div class="right" id="bottom-right"></div>
+    <div class="game">
+        <div class="controls">
+            <h1>Tic Tac Toe</h1>
+        </div>
+        <div class="gameboard">
+            <div class="board">
+                <div class="top-row">
+                    <div class="left" id="top-left"></div><div class="middle" id="top-middle"></div><div class="right" id="top-right"></div>
+                </div>
+                <div class="middle-row">
+                    <div class="left" id="middle-left"></div><div class="middle" id="middle-middle"></div><div class="right" id="middle-right"></div>
+                </div>
+                <div class="bottom-row">
+                    <div class="left" id="bottom-left"></div><div class="middle" id="bottom-middle"></div><div class="right" id="bottom-right"></div>
+                </div>
             </div>
         </div>
     </div>
