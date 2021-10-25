@@ -3,6 +3,7 @@ html,
 body {
     height: 100vh;
     width: 100vw;
+    background-color: rgb(24, 24, 24);
 }
   
 body {
@@ -16,35 +17,56 @@ body {
   
 
 .intro {
+    background-color: rgb(61, 61, 61);
     width: 100vw;
-    height: 50vh;
+    height: 100vh;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     flex-wrap: wrap;
 }
 
+
 .numberOfPlayers {
     width: 100vw;
+    height: 50vh;
     display: flex;
     justify-content: center;
+}
+
+.selectPlayers {
+    background-color: rgb(170, 84, 13);
+    color: rgb(255, 255, 255);
+    font-size: 1.5em;
+    height: 100px;
+    width: 300px;
+    border: none;
+    margin: auto;
+    box-shadow: 0px 0px 10px 3px black;
+}
+
+.selectPlayers:hover {
+    background-color: rgb(177, 107, 50);
 }
 
 .names {
     display: flex;
     width: 100vw;
+    height: 50vh;
     flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 .divSinglePlayer {
     width: 50%;
-    display: none;
+    display: block;
 }
 
 #singlePlayerName {
-    width: 100%;
+    width: 800px;
+    background: none;
+    border: none;
 }
 
 .divTwoPlayer {
@@ -52,38 +74,81 @@ body {
     display: none;
     flex-direction: column;
     justify-content: center;
-    align-items: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-#twoPlayer1Name {
+#name1 {
     width: 100%;
-    margin: 10px;
-
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
-#twoPlayer2Name {
+label {
+    margin: 0px 0px 0px 30%;
+    text-align: center;
+    font-size: 2em;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+.inputNames {
+    margin: 5% 0px 5% 0px;
+    width: 80%;
+    height: 30px;
+    font-size: 1.5em;
+    color: white;
+    text-align: center;
+    background: none;
+    border: none;
+    border-bottom: 3px solid black;
+    outline-width: 0;
+    transition: width 0.4s ease-in-out;
+}
+
+.inputNames:focus {
     width: 100%;
-    margin: 10px;
-
+    outline-width: 0;
 }
 
-.selectPlayers {
-    height: 200px;
-    width: 200px;
-    margin: auto;
+#submitNames {
+    height: 50px;
+    width: 150px;
+    margin: 5% 0px 0px 40%;
+    font-size: 1em;
+    background-color: rgb(170, 84, 13);
+    color: rgb(255, 255, 255);
+    border: none;
+    box-shadow: 0px 0px 5px 3px black;
+}
+
+#submitNames:hover {
+    background-color: rgb(177, 107, 50);
 }
 
 .game {
     display: none;
+    background-color: rgb(24, 24, 24);
 }
 
 .controls {
     height: 20vh;
 }
 
-
+h1 {
+    margin: 100px 0px 0px 0px;
+    text-align: center;
+    color: white;
+    font-size: 3em;
+}
 .gameboard {
-    height: 70vh;
+    height: 100vh;
     width: 100vw;
     display: flex;
     align-items: center;
@@ -93,6 +158,7 @@ body {
 .board {
     height: 100%;
     width: 30%;
+    color: white;
 }
 
 .top-row {
@@ -109,7 +175,7 @@ body {
     display: flex; 
     flex-direction: row;
     flex-wrap: nowrap;
-    border-top: 1px black solid;
+    border-top: 3px rgb(255, 255, 255) solid;
 }
 
 .bottom-row {
@@ -117,13 +183,13 @@ body {
     display: flex; 
     flex-direction: row;
     flex-wrap: nowrap;
-    border-top: 1px black solid;
+    border-top: 3px rgb(255, 255, 255) solid;
 }
 
 .left {
     height: 100%;
     width: 33%;
-    border-right: 1px black solid;
+    border-right: 2px rgb(255, 255, 255) solid;
     font-size: 150px;
     display: flex;
     justify-content: center;
@@ -133,8 +199,8 @@ body {
 .middle {
     height: 100%;
     width: 33%;
-    border-right: 1px black solid;
-    border-left: 1px black solid;
+    border-right: 2px rgb(255, 255, 255) solid;
+    border-left: 2px rgb(255, 255, 255) solid;
     font-size: 150px;
     display: flex;
     justify-content: center;
@@ -144,19 +210,57 @@ body {
 .right {
     height: 100%;
     width: 33%;
-    border-left: 1px black solid;
+    border-left: 2px rgb(255, 255, 255) solid;
     font-size: 150px;
     display: flex;
     justify-content: center;
     text-align: center;
 }
 
+
+
+
 #endGame {
     position:  absolute;
     display: none;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
     height: 100%;
     width: 100%;
     background-color: grey;
-    opacity: 0.6;
-    padding: 500px;
+    opacity: 1;
+}
+
+#winner {
+    color: black;
+    font-size: 3em;
+}
+
+#endGame-txt {
+    width: 100vw;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+#endGame-controls {
+    height: 50vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    
+}
+
+.endGame-btn{
+    height: 150px;
+    width: 300px;
+    color: white;
+    background-color: black;
+    font-size: 2em;
+    margin: 0px 100px 0px 100px;
 }

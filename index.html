@@ -9,7 +9,16 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <div id="endGame"></div>
+    <div id="endGame">
+        <div id=endGame-txt>
+            <p id="winner"></p>
+            <p>Hint: Second player now plays X</p>
+        </div>
+        <div id="endGame-controls">
+            <button id="rematch" class="endGame-btn">Rematch?</button>
+            <button id="changeMode" class="endGame-btn">Change Mode</button>
+        </div>
+    </div>
     <div class="intro">
         <div class="numberOfPlayers">
         <button class="selectPlayers" id="btnSinglePlayer">Player Vs IA</button>
@@ -23,13 +32,17 @@
             </div>
             <div class="divTwoPlayer">
                 <form>
-                    <label for="twoPlayer1Name">Name of Player 1</label>
-                    <input type="text" id="twoPlayer1Name">
+                    <div id="name1">
+                        <label for="twoPlayer1Name">Name of Player 1</label>
+                        <input type="text" id="twoPlayer1Name" class="inputNames">
+                    </div>
+                    <div id="name2">
                     <label for="twoPlayer2Name">Name of Player 2</label>
-                    <input type="text" id="twoPlayer2Name">
-                    <input type="submit" id="submitNames">
+                    <input type="text" id="twoPlayer2Name" class="inputNames">
+                    </div>
+                    <input type="submit" id="submitNames" value="Play">
                 </form>
-                </div>
+            </div>
         </div>
     </div>
     <div class="game">
