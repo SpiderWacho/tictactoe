@@ -20,6 +20,7 @@
         </div>
     </div>
     <div class="intro">
+        <h1>Tic Tac Toe</h1>
         <div class="numberOfPlayers">
         <button class="selectPlayers" id="btnSinglePlayer">Player Vs IA</button>
         <button class="selectPlayers" id="btnTwoPlayer">Player vs Player</button>
@@ -27,9 +28,15 @@
         <div class="names">
             <div class="divSinglePlayer">
             <form>
+                <label for="singlePlayerName">Name of Player</label>
                 <input type="text" id="singlePlayerName">
+                <div class="btn-holder">
+                    <input type="submit" class="submitNames" value="Play">
+                </div>
+
             </form>
             </div>
+            
             <div class="divTwoPlayer">
                 <form>
                     <div id="name1">
@@ -40,7 +47,9 @@
                     <label for="twoPlayer2Name">Name of Player 2</label>
                     <input type="text" id="twoPlayer2Name" class="inputNames">
                     </div>
-                    <input type="submit" id="submitNames" value="Play">
+                    <div class="btn-holder">
+                        <input type="submit" class="submitNames" value="Play">
+                    </div>
                 </form>
             </div>
         </div>

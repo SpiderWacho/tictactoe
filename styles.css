@@ -14,6 +14,13 @@ body {
   * {
     box-sizing: border-box;
 }
+
+h1 {
+    margin: 50px 0px 0px 0px;
+    text-align: center;
+    color: white;
+    font-size: 3em;
+}
   
 
 .intro {
@@ -22,14 +29,14 @@ body {
     height: 100vh;
     display: flex;
     justify-content: space-evenly;
-    align-items: center;
+    align-items: flex-start;
     flex-wrap: wrap;
 }
 
 
 .numberOfPlayers {
     width: 100vw;
-    height: 50vh;
+    height: 30vh;
     display: flex;
     justify-content: center;
 }
@@ -38,8 +45,10 @@ body {
     background-color: rgb(170, 84, 13);
     color: rgb(255, 255, 255);
     font-size: 1.5em;
-    height: 100px;
-    width: 300px;
+    width: 10%;
+    height: 50%;
+    max-height: 100px;
+    max-width: 300px;
     border: none;
     margin: auto;
     box-shadow: 0px 0px 10px 3px black;
@@ -50,6 +59,7 @@ body {
 }
 
 .names {
+    background-color: rgb(61, 61, 61);
     display: flex;
     width: 100vw;
     height: 50vh;
@@ -60,14 +70,46 @@ body {
 
 .divSinglePlayer {
     width: 50%;
-    display: block;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.divSinglePlayer form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 #singlePlayerName {
-    width: 800px;
+    margin: 5% 0px 5% 0px;
+    width: 70%;
+    height: 30px;
+    font-size: 1.5em;
+    color: white;
+    text-align: center;
     background: none;
     border: none;
+    border-bottom: 3px solid black;
+    outline-width: 0;
+    transition: transform 0.3s ease-in-out;
 }
+
+
+
+#singlePlayerName:focus {
+    transform: scalex(1.1);
+    outline-width: 0;
+}
+
+.warning {
+    color: red;
+    font-size: 2em;
+}
+
 
 .divTwoPlayer {
     width: 50%;
@@ -78,15 +120,26 @@ body {
     flex-wrap: wrap;
 }
 
-#name1 {
+#name1  {
     width: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+}
+
+#name2 {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
 }
 
 label {
-    margin: 0px 0px 0px 30%;
+    color: white;
     text-align: center;
     font-size: 2em;
 }
@@ -109,18 +162,23 @@ button:focus {
     border: none;
     border-bottom: 3px solid black;
     outline-width: 0;
-    transition: width 0.4s ease-in-out;
+    transition: transform 0.3s ease-in-out;
 }
 
 .inputNames:focus {
-    width: 100%;
+    transform: scalex(1.2);
     outline-width: 0;
 }
 
-#submitNames {
+.btn-holder {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.submitNames {
     height: 50px;
     width: 150px;
-    margin: 5% 0px 0px 40%;
     font-size: 1em;
     background-color: rgb(170, 84, 13);
     color: rgb(255, 255, 255);
@@ -128,7 +186,7 @@ button:focus {
     box-shadow: 0px 0px 5px 3px black;
 }
 
-#submitNames:hover {
+.submitNames:hover {
     background-color: rgb(177, 107, 50);
 }
 
@@ -141,12 +199,7 @@ button:focus {
     height: 20vh;
 }
 
-h1 {
-    margin: 100px 0px 0px 0px;
-    text-align: center;
-    color: white;
-    font-size: 3em;
-}
+
 .gameboard {
     height: 100vh;
     width: 100vw;
@@ -226,8 +279,8 @@ h1 {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
     background-color: grey;
     opacity: 1;
 }
@@ -257,10 +310,18 @@ h1 {
 }
 
 .endGame-btn{
-    height: 150px;
+    height: 100px;
     width: 300px;
     color: white;
-    background-color: black;
+    background-color: rgb(39, 39, 39);
     font-size: 2em;
     margin: 0px 100px 0px 100px;
+    border: none;
+    box-shadow: 0px 0px 5px 3px black;
+}
+
+
+.endGame-btn:hover {
+    background-color: rgb(90, 90, 90);
+
 }

@@ -55,40 +55,54 @@ const gameState = (() => {
     let turn = 0;
     let players = 0;
     let games = 0;
-    let gameOver = false;
     let tie = false;
     const introDiv = document.querySelector(".intro");
     const btnSinglePlayer = document.querySelector("#btnSinglePlayer");
     const btnTwoPlayer = document.querySelector("#btnTwoPlayer");
     const game = document.querySelector(".game");
-    const submitBtn = document.querySelector("#submitNames");
+    const submitBtn = document.querySelectorAll(".submitNames");
     const rematch = document.querySelector("#rematch");
     const changeMode = document.querySelector("#changeMode");
     const winnerP = document.querySelector("#winner")
-    
-    
-    submitBtn.addEventListener("click", function(e){
-        e.preventDefault();
-        gameStart();
-    })
 
-    function gameStart() {
-        let throwAway = "";
+    btnSinglePlayer.addEventListener("click", () => {players = 1, document.querySelector(".divTwoPlayer").style.display = "none",
+                                                     document.querySelector(".divSinglePlayer").style.display = "flex"})
+    btnTwoPlayer.addEventListener("click", () => {players = 2, document.querySelector(".divTwoPlayer").style.display = "flex",
+                                                    document.querySelector(".divSinglePlayer").style.display = "none"})
+    
+    submitBtn.forEach(btn => btn.addEventListener("click", function(e){
+        e.preventDefault();
+        gameStart(players);
+    }))
+
+    function gameStart(players) {
         introDiv.style.display = "none"; 
         document.querySelector("#endGame").style.display = "none";
         game.style.display = "block";
         turn = 0;
-        let firstPlayerName = document.getElementById('twoPlayer1Name').value;
-        let secondPlayerName = document.getElementById('twoPlayer2Name').value;
-        if (games % 2 === 0) {
-            playerOne = player("x", firstPlayerName)
-            playerTwo = player("O", secondPlayerName)
+        if (players === 2) { 
+            let firstPlayerName = document.getElementById('twoPlayer1Name').value;
+            let secondPlayerName = document.getElementById('twoPlayer2Name').value;
+            
+            if (games % 2 === 0) {
+                playerOne = player("x", firstPlayerName)
+                playerTwo = player("O", secondPlayerName)
+            }
+            else {
+                playerOne = player("x", secondPlayerName)
+                playerTwo = player("O", firstPlayerName)
+            }
         }
         else {
-            playerOne = player("x", secondPlayerName)
-            playerTwo = player("O", firstPlayerName)
+            if (document.querySelector(".warning") === null) {
+                const warningP = document.createElement("p");
+                warningP.textContent = "Coming Soon";
+                warningP.classList.add("warning")
+                document.querySelector(".divSinglePlayer").appendChild(warningP);
+            }    
         }
         gameBoard.clearBoard();
+        
     }
 
     function getCurrentPlayer() {
@@ -100,60 +114,60 @@ const gameState = (() => {
         }
     }
 
-    btnSinglePlayer.addEventListener("click", () => {players = 1, document.querySelector("#singlePlayerName").style.borderBottom = "3px solid black"})
-    btnTwoPlayer.addEventListener("click", () => {players = 2, document.querySelector(".divTwoPlayer").style.display = "flex"})
+    function clearInputs() {
+        if (document.querySelector(".warning") != null) {
+            document.querySelector(".warning").remove();
+        }
+        game.style.display = "none";
+        introDiv.style.display = "flex";
+        document.getElementById('twoPlayer1Name').value = "";
+        document.getElementById('twoPlayer2Name').value = "";
+        document.getElementById('singlePlayerName').value = "";
+        document.querySelector(".divSinglePlayer").style.display = "none";
+        document.querySelector(".divTwoPlayer").style.display = "none";
+    }
 
     
     function isVictory() {
         if (gameBoard.board[0].textContent === gameBoard.board[1].textContent
              && gameBoard.board[1].textContent === gameBoard.board[2].textContent && gameBoard.board[0].textContent != "") {
-            gameOver = true;
             return true;
         }
         else if (gameBoard.board[3].textContent === gameBoard.board[4].textContent
              && gameBoard.board[4].textContent === gameBoard.board[5].textContent && gameBoard.board[3].textContent != "") {
-            gameOver = true;
             return true;
         }
         else if (gameBoard.board[6].textContent === gameBoard.board[7].textContent
              && gameBoard.board[7].textContent === gameBoard.board[8].textContent && gameBoard.board[6].textContent != "") {
-            gameOver = true;
             return true;
         }
         else if (gameBoard.board[0].textContent === gameBoard.board[3].textContent
              && gameBoard.board[3].textContent === gameBoard.board[6].textContent && gameBoard.board[0].textContent != "") {
-            gameOver = true;
             return true;
         }
         else if (gameBoard.board[1].textContent === gameBoard.board[4].textContent
              && gameBoard.board[4].textContent === gameBoard.board[7].textContent && gameBoard.board[1].textContent != "") {
-            gameOver = true;
             return true;
         }
         else if (gameBoard.board[2].textContent === gameBoard.board[5].textContent
              && gameBoard.board[5].textContent === gameBoard.board[8].textContent && gameBoard.board[2].textContent != "") {
-            gameOver = true;
             return true;
         }
         else if (gameBoard.board[0].textContent === gameBoard.board[4].textContent
              && gameBoard.board[4].textContent === gameBoard.board[8].textContent && gameBoard.board[0].textContent != "") {
-            gameOver = true;
             return true;
         }
         else if (gameBoard.board[2].textContent === gameBoard.board[4].textContent 
             && gameBoard.board[4].textContent === gameBoard.board[6].textContent && gameBoard.board[2].textContent != "") {
-            gameOver = true;
             return true;
         }
         else if (gameBoard.board[0].textContent != "" && gameBoard.board[1].textContent != "" && gameBoard.board[2].textContent != "" 
                 && gameBoard.board[3].textContent != "" && gameBoard.board[4].textContent != "" && gameBoard.board[5].textContent != "" 
                 && gameBoard.board[6].textContent != "" && gameBoard.board[7].textContent != "" && gameBoard.board[8].textContent != "") {
             tie = true;
-            gameOver = true;
             return true;
         }
         else {
-            gameOver = false;
             return false;
         }
     }
@@ -168,22 +182,31 @@ const gameState = (() => {
     }
 
     function endGame() {
-        
+        game.style.display = "none";
         document.querySelector("#endGame").style.display = "flex";
         if (tie === false) {    
             winnerP.textContent = `${getCurrentPlayer().getName()} is the winner`;
         }
         else {
-            console.log(`Its a tie!`);
+            winnerP.textContent = `It's a tie!`;
             tie = false;
         }
     }
 
     rematch.addEventListener("click", function(){
         games++;
-        gameStart();
+        gameStart(players);
     })
-    return {nextTurn, players, gameOver, getCurrentPlayer};
+
+    changeMode.addEventListener("click", function(){
+        clearInputs();
+        introDiv.style.display = "flex"; 
+        document.querySelector("#endGame").style.display = "none";
+        game.style.display = "none";
+        
+
+    })
+    return {nextTurn, players, getCurrentPlayer};
 })()
 
 
