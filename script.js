@@ -8,7 +8,6 @@ const gameBoard = (() => {
     const bottomLeft = document.querySelector("#bottom-left");
     const bottomMiddle = document.querySelector("#bottom-middle");
     const bottomRight = document.querySelector("#bottom-right");
-    let gameOver = false;
     //Save elements from DOM to an array
     const board = [topLeft, topMiddle, topRight,
                    middleLeft, middleMiddle, middleRight,
@@ -27,9 +26,6 @@ const gameBoard = (() => {
         }
     } 
 
-
-
-
     board.forEach(cell => {cell.addEventListener("click", function(e){
         target = e.target.textContent;
         //Check if the move is valid
@@ -46,9 +42,7 @@ const gameBoard = (() => {
 const player = (symbol, name) => {
     const getSymbol = () => symbol;
     const getName = () => name;
-    function changeName (newName){ 
-         name = newName}
-    return {getSymbol, getName, changeName};
+    return {getSymbol, getName};
 }
 
 const gameState = (() => {
@@ -93,13 +87,17 @@ const gameState = (() => {
                 playerTwo = player("O", firstPlayerName)
             }
         }
+        //Handle one player option, currently TODO
         else {
             if (document.querySelector(".warning") === null) {
                 const warningP = document.createElement("p");
                 warningP.textContent = "Coming Soon";
                 warningP.classList.add("warning")
                 document.querySelector(".divSinglePlayer").appendChild(warningP);
-            }    
+            }   
+                introDiv.style.display = "flex"; 
+                document.querySelector("#endGame").style.display = "none";
+                game.style.display = "none";  
         }
         gameBoard.clearBoard();
         
@@ -203,9 +201,8 @@ const gameState = (() => {
         introDiv.style.display = "flex"; 
         document.querySelector("#endGame").style.display = "none";
         game.style.display = "none";
-        
-
     })
+    
     return {nextTurn, players, getCurrentPlayer};
 })()
 
