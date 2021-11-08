@@ -11,7 +11,8 @@ const gameBoard = (() => {
     //Save elements from DOM to an array
     const board = [topLeft, topMiddle, topRight,
                    middleLeft, middleMiddle, middleRight,
-                   bottomLeft, bottomMiddle, bottomRight]
+                   bottomLeft, bottomMiddle, bottomRight];
+    
     
     function clearBoard(){
         board.forEach(cell => cell.textContent = "");
@@ -28,14 +29,20 @@ const gameBoard = (() => {
 
     board.forEach(cell => {cell.addEventListener("click", function(e){
         target = e.target.textContent;
+        console.log(gameState.getPlayerNumber());
         //Check if the move is valid
         if (isValidMove(target) === true) {
             e.target.textContent = gameState.getCurrentPlayer().getSymbol();
-            //Call gameState to increment turn
+            console.log(gameState.getCurrentPlayer().getSymbol());  
             gameState.nextTurn();
+            //Call gameState to increment turn
+            if (gameState.getPlayerNumber() === 1) {
+                gameState.computerMove();
+                gameState.nextTurn();
+            }
         }
-    }
-    )})
+    })})
+
     return {clearBoard, board};
 })()
 
@@ -50,6 +57,8 @@ const gameState = (() => {
     let players = 0;
     let games = 0;
     let tie = false;
+    let playerSelection = "";
+    let computer = "";
     const introDiv = document.querySelector(".intro");
     const btnSinglePlayer = document.querySelector("#btnSinglePlayer");
     const btnTwoPlayer = document.querySelector("#btnTwoPlayer");
@@ -58,6 +67,9 @@ const gameState = (() => {
     const rematch = document.querySelector("#rematch");
     const changeMode = document.querySelector("#changeMode");
     const winnerP = document.querySelector("#winner")
+    const symbolBtn = document.querySelectorAll(".startOrder");
+
+    
 
     btnSinglePlayer.addEventListener("click", () => {players = 1, document.querySelector(".divTwoPlayer").style.display = "none",
                                                      document.querySelector(".divSinglePlayer").style.display = "flex"})
@@ -69,7 +81,12 @@ const gameState = (() => {
         gameStart(players);
     }))
 
+    symbolBtn.forEach(btn => btn.addEventListener("click", function(e) {
+        playerSelection = e.target.textContent;
+        gameStart();
+    }))
     function gameStart(players) {
+        gameBoard.clearBoard();
         introDiv.style.display = "none"; 
         document.querySelector("#endGame").style.display = "none";
         game.style.display = "block";
@@ -77,31 +94,45 @@ const gameState = (() => {
         if (players === 2) { 
             let firstPlayerName = document.getElementById('twoPlayer1Name').value;
             let secondPlayerName = document.getElementById('twoPlayer2Name').value;
-            
             if (games % 2 === 0) {
-                playerOne = player("x", firstPlayerName)
+                playerOne = player("X", firstPlayerName)
                 playerTwo = player("O", secondPlayerName)
             }
             else {
-                playerOne = player("x", secondPlayerName)
+                playerOne = player("X", secondPlayerName)
                 playerTwo = player("O", firstPlayerName)
             }
         }
-        //Handle one player option, currently TODO
         else {
-            if (document.querySelector(".warning") === null) {
-                const warningP = document.createElement("p");
-                warningP.textContent = "Coming Soon";
-                warningP.classList.add("warning")
-                document.querySelector(".divSinglePlayer").appendChild(warningP);
-            }   
-                introDiv.style.display = "flex"; 
-                document.querySelector("#endGame").style.display = "none";
-                game.style.display = "none";  
+            if (playerSelection === "X") {
+                playerOne = player(playerSelection, "human"); 
+                playerTwo = player("O", "computer")
+                computer = playerTwo;
+                console.log("Is x");
+            }
+            else {
+                playerOne = player("X", "computer");
+                computer = playerOne;
+                playerTwo = player(playerSelection, "human");
+                computerMove();
+                nextTurn();
+            }
         }
-        gameBoard.clearBoard();
-        
     }
+
+    function computerMove() {
+        cell = Math.floor(Math.random() * (9 - 0) + 0);
+            while (gameBoard.board[cell].textContent != "") {
+                if (isVictory()){
+                    break;
+                }
+                else {
+                    computerMove();
+                    break;
+                }
+            }
+            gameBoard.board[cell].textContent = computer.getSymbol();
+    } 
 
     function getCurrentPlayer() {
         if (turn % 2 === 0) {
@@ -113,14 +144,10 @@ const gameState = (() => {
     }
 
     function clearInputs() {
-        if (document.querySelector(".warning") != null) {
-            document.querySelector(".warning").remove();
-        }
         game.style.display = "none";
         introDiv.style.display = "flex";
         document.getElementById('twoPlayer1Name').value = "";
         document.getElementById('twoPlayer2Name').value = "";
-        document.getElementById('singlePlayerName').value = "";
         document.querySelector(".divSinglePlayer").style.display = "none";
         document.querySelector(".divTwoPlayer").style.display = "none";
     }
@@ -202,8 +229,12 @@ const gameState = (() => {
         document.querySelector("#endGame").style.display = "none";
         game.style.display = "none";
     })
+
+    function getPlayerNumber() {
+        return players;
+    }
     
-    return {nextTurn, players, getCurrentPlayer};
+    return {nextTurn, players, getCurrentPlayer, computerMove, getPlayerNumber};
 })()
 
 
