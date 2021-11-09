@@ -13,9 +13,17 @@ const gameBoard = (() => {
                    middleLeft, middleMiddle, middleRight,
                    bottomLeft, bottomMiddle, bottomRight];
     
+    //A board in the "back" to realize logic on it, later i can use
+    //the same functions on a board created for the minimax algorithm
+    const backBoard = ["","",""
+                        ,"","","",
+                        "","",""];
     
-    function clearBoard(){
+    function clearBoards(){
         board.forEach(cell => cell.textContent = "");
+        for (let i = 0; i < 9; i++){
+            backBoard[i] = "";
+        }
     }
 
     function isValidMove(target) {
@@ -33,7 +41,9 @@ const gameBoard = (() => {
         //Check if the move is valid
         if (isValidMove(target) === true) {
             e.target.textContent = gameState.getCurrentPlayer().getSymbol();
-            console.log(gameState.getCurrentPlayer().getSymbol());  
+            //Store information in the backBoard (for later use in minimax algorithm)
+            //Also to use it in checkForVictory function to pass it as an argument
+            backBoard[e.target.getAttribute("data-number")] = e.target.textContent;
             gameState.nextTurn();
             //Call gameState to increment turn
             if (gameState.getPlayerNumber() === 1) {
@@ -43,7 +53,7 @@ const gameBoard = (() => {
         }
     })})
 
-    return {clearBoard, board};
+    return {clearBoards, board, backBoard};
 })()
 
 const player = (symbol, name) => {
@@ -69,8 +79,6 @@ const gameState = (() => {
     const winnerP = document.querySelector("#winner")
     const symbolBtn = document.querySelectorAll(".startOrder");
 
-    
-
     btnSinglePlayer.addEventListener("click", () => {players = 1, document.querySelector(".divTwoPlayer").style.display = "none",
                                                      document.querySelector(".divSinglePlayer").style.display = "flex"})
     btnTwoPlayer.addEventListener("click", () => {players = 2, document.querySelector(".divTwoPlayer").style.display = "flex",
@@ -85,8 +93,9 @@ const gameState = (() => {
         playerSelection = e.target.textContent;
         gameStart();
     }))
+
     function gameStart(players) {
-        gameBoard.clearBoard();
+        gameBoard.clearBoards();
         introDiv.style.display = "none"; 
         document.querySelector("#endGame").style.display = "none";
         game.style.display = "block";
@@ -106,9 +115,8 @@ const gameState = (() => {
         else {
             if (playerSelection === "X") {
                 playerOne = player(playerSelection, "human"); 
-                playerTwo = player("O", "computer")
+                playerTwo = player("O", "computer");
                 computer = playerTwo;
-                console.log("Is x");
             }
             else {
                 playerOne = player("X", "computer");
@@ -123,7 +131,7 @@ const gameState = (() => {
     function computerMove() {
         cell = Math.floor(Math.random() * (9 - 0) + 0);
             while (gameBoard.board[cell].textContent != "") {
-                if (isVictory()){
+                if (isVictory(gameBoard.backBoard)){
                     break;
                 }
                 else {
@@ -132,6 +140,7 @@ const gameState = (() => {
                 }
             }
             gameBoard.board[cell].textContent = computer.getSymbol();
+            gameBoard.backBoard[cell] = computer.getSymbol();
     } 
 
     function getCurrentPlayer() {
@@ -153,42 +162,34 @@ const gameState = (() => {
     }
 
     
-    function isVictory() {
-        if (gameBoard.board[0].textContent === gameBoard.board[1].textContent
-             && gameBoard.board[1].textContent === gameBoard.board[2].textContent && gameBoard.board[0].textContent != "") {
+    function isVictory(board) {
+        if (board[0] === board[1] && board[1] === board[2] && board[0]!= "") {
             return true;
         }
-        else if (gameBoard.board[3].textContent === gameBoard.board[4].textContent
-             && gameBoard.board[4].textContent === gameBoard.board[5].textContent && gameBoard.board[3].textContent != "") {
+        else if (board[3] === board[4] && board[4] === board[5] && board[3] != "") {
             return true;
         }
-        else if (gameBoard.board[6].textContent === gameBoard.board[7].textContent
-             && gameBoard.board[7].textContent === gameBoard.board[8].textContent && gameBoard.board[6].textContent != "") {
+        else if (board[6] === board[7] && board[7] === board[8] && board[6] != "") {
             return true;
         }
-        else if (gameBoard.board[0].textContent === gameBoard.board[3].textContent
-             && gameBoard.board[3].textContent === gameBoard.board[6].textContent && gameBoard.board[0].textContent != "") {
+        else if (board[0] === board[3] && board[3] === board[6] && board[0] != "") {
             return true;
         }
-        else if (gameBoard.board[1].textContent === gameBoard.board[4].textContent
-             && gameBoard.board[4].textContent === gameBoard.board[7].textContent && gameBoard.board[1].textContent != "") {
+        else if (board[1] === board[4] && board[4] === board[7] && board[1] != "") {
             return true;
         }
-        else if (gameBoard.board[2].textContent === gameBoard.board[5].textContent
-             && gameBoard.board[5].textContent === gameBoard.board[8].textContent && gameBoard.board[2].textContent != "") {
+        else if (board[2] === board[5] && board[5] === board[8] && board[2] != "") {
             return true;
         }
-        else if (gameBoard.board[0].textContent === gameBoard.board[4].textContent
-             && gameBoard.board[4].textContent === gameBoard.board[8].textContent && gameBoard.board[0].textContent != "") {
+        else if (board[0] === board[4] && board[4] === board[8] && board[0] != "") {
             return true;
         }
-        else if (gameBoard.board[2].textContent === gameBoard.board[4].textContent 
-            && gameBoard.board[4].textContent === gameBoard.board[6].textContent && gameBoard.board[2].textContent != "") {
+        else if (board[2] === board[4] && board[4] === board[6] && board[2] != "") {
             return true;
         }
-        else if (gameBoard.board[0].textContent != "" && gameBoard.board[1].textContent != "" && gameBoard.board[2].textContent != "" 
-                && gameBoard.board[3].textContent != "" && gameBoard.board[4].textContent != "" && gameBoard.board[5].textContent != "" 
-                && gameBoard.board[6].textContent != "" && gameBoard.board[7].textContent != "" && gameBoard.board[8].textContent != "") {
+        else if (board[0] != "" && board[1] != "" && board[2] != "" 
+                && board[3] != "" && board[4] != "" && board[5] != "" 
+                && board[6] != "" && board[7] != "" && board[8] != "") {
             tie = true;
             return true;
         }
@@ -198,7 +199,7 @@ const gameState = (() => {
     }
     
     const nextTurn = () => {
-        if (!isVictory()){
+        if (!isVictory(gameBoard.backBoard)){
             turn++;
         }
         else {
