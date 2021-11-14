@@ -7,6 +7,7 @@ body {
     height: 100vh;
     width: 100vw;
     background-color: rgb(24, 24, 24);
+    margin:0;
 }
   
 body {
@@ -19,11 +20,12 @@ body {
 }
 
 h1 {
-    margin: 50px 0px 0px 0px;
     text-align: center;
     color: white;
     font-size: 6em;
     font-family: 'Yanone Kaffeesatz', sans-serif;
+    height: 20%;
+    margin: 30px 0px 15px 0px;
 }
   
 
@@ -221,22 +223,18 @@ button:focus {
     background-color: rgb(177, 107, 50);
 }
 
-
-
 .game {
     display: none;
     background-color: rgb(24, 24, 24);
+    height: 100vh;
 }
-
-.controls {
-    height: 20vh;
-}
-
 
 .gameboard {
+    display: flex;
     height: 100vh;
     width: 100vw;
-    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
 }
@@ -312,15 +310,16 @@ button:focus {
 
 
 #endGame {
-    position:  absolute;
+    position: absolute;
     display: none;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     height: 100vh;
     width: 100vw;
+    flex-grow: 1;
     background-color: grey;
-    opacity: 1;
+    opacity: 0.9;
 }
 
 #winner {
@@ -329,9 +328,10 @@ button:focus {
     text-align: center;
 }
 
+
 #endGame-txt {
     width: 100vw;
-    height: 40vh;
+    height: 50vh;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -341,7 +341,7 @@ button:focus {
 }
 
 #endGame-controls {
-    height: 60vh;
+    height: 50vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
@@ -351,8 +351,9 @@ button:focus {
 }
 
 .endGame-btn{
-    height: 100px;
+    height: 30%;
     width: 50%;
+    max-height: 100px;
     max-width: 300px;
     color: white;
     background-color: rgb(39, 39, 39);
@@ -362,14 +363,28 @@ button:focus {
     font-family: 'Yanone Kaffeesatz', sans-serif;
 }
 
-p {
+#winner {
+    font-size: 3em;
+    width: 100%;
+}
+
+#hint {
     font-size: 1.5em;
 }
 
 
 .endGame-btn:hover {
     background-color: rgb(90, 90, 90);
+}
 
+#signature {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    text-align: center;
+    color: white;
+    font-size: 1em;
 }
 
 @media only screen and (min-width: 992px) {
@@ -385,16 +400,19 @@ p {
     .top-row {
         height: 25%;
         max-height: 20vh;
+        min-height: 150px;
     }
     
     .middle-row {
         height: 25%;
         max-height: 20vh;
+        min-height: 150px;
     }
     
     .bottom-row {
         height: 25%;
         max-height: 20vh;
+        min-height: 150px;
     }
 
     .board {
@@ -411,6 +429,7 @@ p {
 
     .board {
         width: 50%;
+        font-size: 7em;
     }
     .top-row {
         height: 25%;
@@ -442,6 +461,12 @@ p {
         max-width: 300px;
     }
 
+    #endGame-controls {
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+    }    
+
 }
 
 @media only screen and (min-width: 1900px) {
@@ -449,3 +474,4 @@ p {
         width: 30%;
     }
 }
+

@@ -37,7 +37,6 @@ const gameBoard = (() => {
 
     board.forEach(cell => {cell.addEventListener("click", function(e){
         target = e.target.textContent;
-        console.log(gameState.getPlayerNumber());
         //Check if the move is valid
         if (isValidMove(target) === true) {
             e.target.textContent = gameState.getCurrentPlayer().getSymbol();
@@ -68,7 +67,8 @@ const gameState = (() => {
     let games = 0;
     let tie = false;
     let playerSelection = "";
-    let computer = "";
+    let computer = {};
+    winnerSymbol = "";
     const introDiv = document.querySelector(".intro");
     const btnSinglePlayer = document.querySelector("#btnSinglePlayer");
     const btnTwoPlayer = document.querySelector("#btnTwoPlayer");
@@ -117,11 +117,13 @@ const gameState = (() => {
                 playerOne = player(playerSelection, "human"); 
                 playerTwo = player("O", "computer");
                 computer = playerTwo;
+                human = playerOne;
             }
             else {
                 playerOne = player("X", "computer");
                 computer = playerOne;
                 playerTwo = player(playerSelection, "human");
+                human = playerTwo;
                 computerMove();
                 nextTurn();
             }
@@ -129,19 +131,78 @@ const gameState = (() => {
     }
 
     function computerMove() {
-        cell = Math.floor(Math.random() * (9 - 0) + 0);
-            while (gameBoard.board[cell].textContent != "") {
-                if (isVictory(gameBoard.backBoard)){
-                    break;
+        cell = bestMove();
+ 
+        if (gameBoard.backBoard[cell] !== undefined) {
+            gameBoard.backBoard[cell] = computer.getSymbol();
+            gameBoard.board.forEach(el => {
+            if (el.getAttribute("data-number") == cell) { 
+                el.textContent = computer.getSymbol();
+            }})
+        }
+    }
+    
+
+    function bestMove() {
+        let bestScore = -Infinity;
+        let move;
+        for (i = 0; i < 9; i++) {
+            if (gameBoard.backBoard[i] == "") {
+                gameBoard.backBoard[i] = computer.getSymbol();
+                let score = minimax(gameBoard.backBoard, 0, false);
+                gameBoard.backBoard[i] = "";
+                if (score > bestScore)  {
+                    bestScore = score;
+                    move = i;
                 }
-                else {
-                    computerMove();
-                    break;
+            }    
+        }
+        return move;
+    }
+
+    function minimax(board, depth, isMaximizing) {
+        if (isVictory(board)) {
+            let winner = winnerSymbol;
+            let score = 0;
+            computerSymbol = computer.getSymbol();
+            humanSymbol = human.getSymbol(); 
+            if (tie === true) {
+                score = 0;
+                tie = false;
+            }
+            if (winner === computerSymbol) {
+                score = 10;
+            }
+            else if (winner === humanSymbol) {
+                score = -10;
+            }
+            return score;
+        }
+        if (isMaximizing) {
+            let bestScore = -Infinity;
+            for (let i = 0; i < 9; i++) {
+                if (board[i] == "") {
+                    board[i] = computer.getSymbol();
+                    let score = minimax(board, depth + 1, false);
+                    board[i] = "";
+                    bestScore = Math.max(score, bestScore);
                 }
             }
-            gameBoard.board[cell].textContent = computer.getSymbol();
-            gameBoard.backBoard[cell] = computer.getSymbol();
-    } 
+            return bestScore;
+        }
+        else {
+            let bestScore = Infinity;
+            for (let i = 0; i < 9; i++) {
+                if (board[i] == "") {
+                    board[i] = human.getSymbol();
+                    let score = minimax(board, depth + 1, true);
+                    board[i] = "";
+                    bestScore = Math.min(score, bestScore);
+                }
+            }
+            return bestScore;
+        }
+    }
 
     function getCurrentPlayer() {
         if (turn % 2 === 0) {
@@ -161,35 +222,44 @@ const gameState = (() => {
         document.querySelector(".divTwoPlayer").style.display = "none";
     }
 
-    
+    //winnerSymbol later will return who is the winner to the minimax function
     function isVictory(board) {
         if (board[0] === board[1] && board[1] === board[2] && board[0]!= "") {
+            winnerSymbol = board[0]
             return true;
         }
         else if (board[3] === board[4] && board[4] === board[5] && board[3] != "") {
+            winnerSymbol = board[3]
             return true;
         }
         else if (board[6] === board[7] && board[7] === board[8] && board[6] != "") {
+            winnerSymbol = board[6]
             return true;
         }
         else if (board[0] === board[3] && board[3] === board[6] && board[0] != "") {
+            winnerSymbol = board[0]
             return true;
         }
         else if (board[1] === board[4] && board[4] === board[7] && board[1] != "") {
+            winnerSymbol = board[1]
             return true;
         }
         else if (board[2] === board[5] && board[5] === board[8] && board[2] != "") {
+            winnerSymbol = board[2]
             return true;
         }
         else if (board[0] === board[4] && board[4] === board[8] && board[0] != "") {
+            winnerSymbol = board[0]
             return true;
         }
         else if (board[2] === board[4] && board[4] === board[6] && board[2] != "") {
+            winnerSymbol = board[2]
             return true;
         }
         else if (board[0] != "" && board[1] != "" && board[2] != "" 
                 && board[3] != "" && board[4] != "" && board[5] != "" 
                 && board[6] != "" && board[7] != "" && board[8] != "") {
+            winnerSymbol = undefined;
             tie = true;
             return true;
         }
@@ -207,15 +277,18 @@ const gameState = (() => {
         }
     }
 
+    //Function to format player name to title case (Title)
+    String.prototype.toProperCase = function () {
+        return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    };
+
     function endGame() {
-        game.style.display = "none";
         document.querySelector("#endGame").style.display = "flex";
         if (tie === false) {    
-            winnerP.textContent = `${getCurrentPlayer().getName()} is the winner`;
+            winnerP.textContent = `${getCurrentPlayer().getName().toProperCase()}  wins!`;
         }
         else {
             winnerP.textContent = `It's a tie!`;
-            tie = false;
         }
     }
 
