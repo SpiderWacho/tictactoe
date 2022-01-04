@@ -46,7 +46,7 @@ const gameBoard = (() => {
             gameState.nextTurn();
             //Call gameState to increment turn
             if (gameState.getPlayerNumber() === 1) {
-                gameState.computerMove();
+                setTimeout(() => {gameState.computerMove();}, 450);
                 gameState.nextTurn();
             }
         }
