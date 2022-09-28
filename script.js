@@ -34,23 +34,32 @@ const gameBoard = (() => {
             return false;
         }
     } 
-
+    let isTurn = true 
+    
     board.forEach(cell => {cell.addEventListener("click", function(e){
         target = e.target.textContent;
         //Check if the move is valid
-        if (isValidMove(target) === true) {
-            e.target.textContent = gameState.getCurrentPlayer().getSymbol();
-            //Store information in the backBoard (for later use in minimax algorithm)
-            //Also to use it in checkForVictory function to pass it as an argument
-            backBoard[e.target.getAttribute("data-number")] = e.target.textContent;
-            gameState.nextTurn();
-            //Call gameState to increment turn
-            if (gameState.getPlayerNumber() === 1) {
-                setTimeout(() => {gameState.computerMove();}, 450);
+        if (isTurn) {
+            if (isValidMove(target) === true) {
+                e.target.textContent = gameState.getCurrentPlayer().getSymbol();
+                //Store information in the backBoard (for later use in minimax algorithm)
+                //Also to use it in checkForVictory function to pass it as an argument
+                backBoard[e.target.getAttribute("data-number")] = e.target.textContent;
                 gameState.nextTurn();
+                if  (gameState.getNumberOfPlayers() === 1) {
+                    isTurn = false;
+                    //Call gameState to increment turn
+                    setTimeout( () => {
+                        gameState.computerMove();
+                        gameState.nextTurn();
+                        isTurn = true;
+                    }, 500)
+                }
             }
         }
     })})
+
+    
 
     return {clearBoards, board, backBoard};
 })()
@@ -69,6 +78,8 @@ const gameState = (() => {
     let playerSelection = "";
     let computer = {};
     winnerSymbol = "";
+    let playerOne = '';
+    let playerTwo = '';
     const introDiv = document.querySelector(".intro");
     const btnSinglePlayer = document.querySelector("#btnSinglePlayer");
     const btnTwoPlayer = document.querySelector("#btnTwoPlayer");
@@ -95,6 +106,7 @@ const gameState = (() => {
     }))
 
     function gameStart(players) {
+
         gameBoard.clearBoards();
         introDiv.style.display = "none"; 
         document.querySelector("#endGame").style.display = "none";
@@ -269,11 +281,13 @@ const gameState = (() => {
     }
     
     const nextTurn = () => {
-        if (!isVictory(gameBoard.backBoard)){
-            turn++;
+        console.log(isVictory(gameBoard.backBoard))
+        if (isVictory(gameBoard.backBoard)){
+            endGame()
+            return;
         }
         else {
-           endGame();
+           turn++;
         }
     }
 
@@ -304,11 +318,11 @@ const gameState = (() => {
         game.style.display = "none";
     })
 
-    function getPlayerNumber() {
+    function getNumberOfPlayers() {
         return players;
     }
     
-    return {nextTurn, players, getCurrentPlayer, computerMove, getPlayerNumber};
+    return {nextTurn, players, getCurrentPlayer, computerMove, getNumberOfPlayers};
 })()
 
 
