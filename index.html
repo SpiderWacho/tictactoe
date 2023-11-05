@@ -15,66 +15,73 @@
             <p id="hint">Hint: The other player now plays X</p>
         </div>
         <div id="endGame-controls">
-            <button id="rematch" class="endGame-btn">Rematch?</button>
-            <button id="changeMode" class="endGame-btn">Change Mode</button>
+            <button id="rematch" class="endGame-btn btn-primary">Rematch</button>
+            <button id="changeMode" class="endGame-btn btn-primary">Change Mode</button>
         </div>
     </div>
-    <div class="intro">
-        <h1>Tic Tac Toe</h1>
-        <div class="numberOfPlayers">
-        <button class="selectPlayers" id="btnSinglePlayer">Player Vs IA</button>
-        <button class="selectPlayers" id="btnTwoPlayer">Player vs Player</button>
-        </div>
-        <div class="names">
-            <div class="divSinglePlayer">
-                <p>Choose your symbol</p>
-                <div class="btn-holder">
-                    <button class="startOrder" id="X">X</button>
-                    <button class="startOrder" id="O">O</button>
-                </div>
+    <div class="content">
+        <div class="intro">
+            <h1>Tic Tac Toe</h1>
+            <div class="img-container">
+                <img class="tictactoe" src="./img/tictactoe.png">
             </div>
-            
-            <div class="divTwoPlayer">
-                <form>
-                    <div id="name1">
-                        <label for="twoPlayer1Name">Name of Player 1</label>
-                        <input type="text" id="twoPlayer1Name" class="inputNames">
-                    </div>
-                    <div id="name2">
-                    <label for="twoPlayer2Name">Name of Player 2</label>
-                    <input type="text" id="twoPlayer2Name" class="inputNames">
-                    </div>
+            <div class="numberOfPlayers">
+            <button class="selectPlayers btn-primary" id="btnSinglePlayer">Player Vs IA</button>
+            <button class="selectPlayers btn-primary" id="btnTwoPlayer">Player vs Player</button>
+            </div>
+            <div class="names">
+                <div class="divSinglePlayer">
+                    <p class="info-text">Choose your symbol</p>
                     <div class="btn-holder">
-                        <input type="submit" class="submitNames" value="Play">
+                        <button  class="startOrder btn-primary"  id="X">X</button>
+                        <button  class="startOrder btn-primary"  id="O">O</button>
+                        <span class="back-container">
+                            <button class="btn-primary back">Back</button>
+                        </span>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="game">
-        <h1>Tic Tac Toe</h1>
-        <div class="gameboard">
-            <div class="board">
-                <div class="top-row">
-                    <div class="left" id="top-left" data-number="0"></div>
-                    <div class="middle" id="top-middle" data-number="1"></div>
-                    <div class="right" id="top-right" data-number="2"></div>
                 </div>
-                <div class="middle-row">
-                    <div class="left" id="middle-left" data-number="3"></div>
-                    <div class="middle" id="middle-middle" data-number="4"></div>
-                    <div class="right" id="middle-right" data-number="5"></div>
-                </div>
-                <div class="bottom-row">
-                    <div class="left" id="bottom-left" data-number="6"></div>
-                    <div class="middle" id="bottom-middle" data-number="7"></div>
-                    <div class="right" id="bottom-right" data-number="8"></div>
+                
+                <div class="divTwoPlayer">
+                    <form>
+                        <div id="name1">
+                            <label for="twoPlayer1Name">Name of Player 1</label>
+                            <input type="text" id="twoPlayer1Name" class="inputNames">
+                        </div>
+                        <div id="name2">
+                        <label for="twoPlayer2Name">Name of Player 2</label>
+                        <input type="text" id="twoPlayer2Name" class="inputNames">
+                        </div>
+                        <div class="btn-holder">
+                            <button type="button" class="back btn-primary">Back</button>
+                            <input type="submit" class="submitNames btn-primary"  value="Play">
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="signature">
-        <p>©Gaston Vecchio 2021</p>
-    </div>
+        <div class="game">
+            <p class="text-info" id="game-title"></p>
+            <div class="gameboard">
+                <div class="board">
+                    <div class="top-row">
+                        <div class="left" id="top-left" data-number="0"></div>
+                        <div class="middle" id="top-middle" data-number="1"></div>
+                        <div class="right" id="top-right" data-number="2"></div>
+                    </div>
+                    <div class="middle-row">
+                        <div class="left" id="middle-left" data-number="3"></div>
+                        <div class="middle" id="middle-middle" data-number="4"></div>
+                        <div class="right" id="middle-right" data-number="5"></div>
+                    </div>
+                    <div class="bottom-row">
+                        <div class="left" id="bottom-left" data-number="6"></div>
+                        <div class="middle" id="bottom-middle" data-number="7"></div>
+                        <div class="right" id="bottom-right" data-number="8"></div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-primary back">Back</button>
+        </div>
+</div>
 </body>
 </html>

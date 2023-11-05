@@ -1,3 +1,36 @@
+//Helper function
+//Function to format player name to title case (Title)
+String.prototype.toProperCase = function () {
+    return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+};
+
+//DOM elements
+    const introDiv = document.querySelector(".intro");
+    const btnSinglePlayer = document.querySelector("#btnSinglePlayer");
+    const btnTwoPlayer = document.querySelector("#btnTwoPlayer");
+    const game = document.querySelector(".game");
+    const submitBtn = document.querySelectorAll(".submitNames");
+    const rematch = document.querySelector("#rematch");
+    const changeMode = document.querySelector("#changeMode");
+    const winnerP = document.querySelector("#winner")
+    const symbolBtn = document.querySelectorAll(".startOrder");
+    const backBtn = document.querySelectorAll(".back")
+    const numberOfPlayersDiv = document.querySelector(".numberOfPlayers")
+    const buttons = document.querySelectorAll(".selectPlayers");
+    const gameTitle = document.querySelector("#game-title")
+
+const hideElement = (element) => {
+    element.classList.toggle("hidden");
+}
+
+
+buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        hideElement(numberOfPlayersDiv)
+    });
+})
+
+
 const gameBoard = (() => {
     const topLeft = document.querySelector("#top-left");
     const topMiddle = document.querySelector("#top-middle");
@@ -8,6 +41,7 @@ const gameBoard = (() => {
     const bottomLeft = document.querySelector("#bottom-left");
     const bottomMiddle = document.querySelector("#bottom-middle");
     const bottomRight = document.querySelector("#bottom-right");
+    const boardTitle = document.querySelector("#board-title");
     //Save elements from DOM to an array
     const board = [topLeft, topMiddle, topRight,
                    middleLeft, middleMiddle, middleRight,
@@ -34,12 +68,13 @@ const gameBoard = (() => {
             return false;
         }
     } 
+
     let isTurn = true 
-    
     board.forEach(cell => {cell.addEventListener("click", function(e){
         target = e.target.textContent;
-        //Check if the move is valid
+        
         if (isTurn) {
+            //Check if the move is valid
             if (isValidMove(target) === true) {
                 e.target.textContent = gameState.getCurrentPlayer().getSymbol();
                 //Store information in the backBoard (for later use in minimax algorithm)
@@ -53,7 +88,7 @@ const gameBoard = (() => {
                         gameState.computerMove();
                         gameState.nextTurn();
                         isTurn = true;
-                    }, 500)
+                    }, 450)
                 }
             }
         }
@@ -80,15 +115,8 @@ const gameState = (() => {
     winnerSymbol = "";
     let playerOne = '';
     let playerTwo = '';
-    const introDiv = document.querySelector(".intro");
-    const btnSinglePlayer = document.querySelector("#btnSinglePlayer");
-    const btnTwoPlayer = document.querySelector("#btnTwoPlayer");
-    const game = document.querySelector(".game");
-    const submitBtn = document.querySelectorAll(".submitNames");
-    const rematch = document.querySelector("#rematch");
-    const changeMode = document.querySelector("#changeMode");
-    const winnerP = document.querySelector("#winner")
-    const symbolBtn = document.querySelectorAll(".startOrder");
+
+
 
     btnSinglePlayer.addEventListener("click", () => {players = 1, document.querySelector(".divTwoPlayer").style.display = "none",
                                                      document.querySelector(".divSinglePlayer").style.display = "flex"})
@@ -97,6 +125,9 @@ const gameState = (() => {
     
     submitBtn.forEach(btn => btn.addEventListener("click", function(e){
         e.preventDefault();
+        if (!document.getElementById('twoPlayer1Name').value || !document.getElementById('twoPlayer2Name').value) {
+            return
+        }
         gameStart(players);
     }))
 
@@ -105,12 +136,14 @@ const gameState = (() => {
         gameStart();
     }))
 
-    function gameStart(players) {
 
+    function gameStart(players) {
         gameBoard.clearBoards();
         introDiv.style.display = "none"; 
         document.querySelector("#endGame").style.display = "none";
-        game.style.display = "block";
+        game.style.display = "flex";
+        gameTitle.textContent = `Games played: ${games}`;
+
         turn = 0;
         if (players === 2) { 
             let firstPlayerName = document.getElementById('twoPlayer1Name').value;
@@ -144,7 +177,6 @@ const gameState = (() => {
 
     function computerMove() {
         cell = bestMove();
- 
         if (gameBoard.backBoard[cell] !== undefined) {
             gameBoard.backBoard[cell] = computer.getSymbol();
             gameBoard.board.forEach(el => {
@@ -291,11 +323,6 @@ const gameState = (() => {
         }
     }
 
-    //Function to format player name to title case (Title)
-    String.prototype.toProperCase = function () {
-        return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-    };
-
     function endGame() {
         document.querySelector("#endGame").style.display = "flex";
         if (tie === false) {    
@@ -311,12 +338,18 @@ const gameState = (() => {
         gameStart(players);
     })
 
-    changeMode.addEventListener("click", function(){
+    const restartGame = () => {
         clearInputs();
         introDiv.style.display = "flex"; 
         document.querySelector("#endGame").style.display = "none";
         game.style.display = "none";
-    })
+        numberOfPlayersDiv.classList.toggle("hidden");
+
+    }
+
+    changeMode.addEventListener("click", restartGame)
+
+    backBtn.forEach(btn => btn.addEventListener("click", restartGame))
 
     function getNumberOfPlayers() {
         return players;

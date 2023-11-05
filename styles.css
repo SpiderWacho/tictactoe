@@ -1,78 +1,100 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Yanone+Kaffeesatz:wght@600&display=swap');
-
-
-html,
-body {
-    height: 100vh;
-    width: 100vw;
-    background-color: rgb(24, 24, 24);
-    margin:0;
-}
-  
-body {
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@300&display=swap');
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-  * {
-    box-sizing: border-box;
+body {
+    width: 100%;
+    height: 100%;
+    background-color: #fafafa;
+}
+
+.content {
+    width: 100%;
+    height: 100vh;
+    background-size: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background: #e0e0e0;
 }
 
 h1 {
     text-align: center;
-    color: white;
-    font-size: 6em;
-    font-family: 'Yanone Kaffeesatz', sans-serif;
-    height: 20%;
-    margin: 30px 0px 15px 0px;
+    font-size: 4rem;
+    font-family: 'Dosis', sans-serif;
+    width: 100%;
+}
+
+
+
+.img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.tictactoe {
+    width: 100%;
+    aspect-ratio: 1  / 1;
 }
   
 
 .intro {
-    background-color: rgb(61, 61, 61);
-    width: 100vw;
-    height: 100vh;
+
+    width: 70%;
     display: flex;
     justify-content: space-evenly;
     align-items: flex-start;
     flex-wrap: wrap;
+    border-radius: 30px;
+
+
 }
 
 
 .numberOfPlayers {
-    width: 100%;
-    height: 20%;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: center;
+    gap: 50px;
 
 }
 
-.selectPlayers {
-    background-color: rgb(170, 84, 13);
-    color: rgb(255, 255, 255);
-    font-size: 1.5em;
-    min-width: 150px;
-    width: 10%;
-    height: 50%;
-    max-height: 70px;
-    max-width: 300px;
-    border: none;
-    box-shadow: 0px 0px 10px 3px black;
-    font-family: 'Yanone Kaffeesatz', sans-serif;
+.btn-primary {
+    color: black;
+    border: 1PX solid black;
+    height: 50px;
+    width: 100px;
+    font-family: 'Dosis', sans-serif;
+    font-weight: bolder;
 }
 
-.selectPlayers:hover {
+.btn-primary:hover {
     background-color: rgb(177, 107, 50);
 }
 
+.submitNames {
+    background-color: hsl(0, 100%, 84%);
+}
+
+.submitNames:hover {
+    background-color: hsl(0, 54%, 84%);
+}
+
+.hidden {
+    display: none;
+}
+
 .names {
-    background-color: rgb(61, 61, 61);
     display: flex;
-    width: 100vw;
-    height: 50vh;
+    width: 100%;
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
@@ -150,10 +172,11 @@ h1 {
 }
 
 label {
-    font-family: 'Yanone Kaffeesatz', sans-serif;
-    color: white;
+    font-family: 'Dosis', sans-serif;
+    font-weight: bolder;
+    color: black;
     text-align: center;
-    font-size: 1.5em;
+    margin-top: 10px;
 }
 
 input:focus,
@@ -164,92 +187,80 @@ button:focus {
 }
 
 .inputNames {
-    margin: 5% 0px 5% 0px;
-    width: 100%;
-    height: 30px;
-    font-size: 1.5em;
-    color: rgb(209, 209, 209);
     text-align: center;
     background: none;
     border: none;
-    border-bottom: 3px solid black;
-    outline-width: 0;
+    width: 75%;
+    border-bottom: 1px solid black;
     transition: transform 0.3s ease-in-out;
-    font-family: 'Yanone Kaffeesatz', sans-serif;
+    font-family: 'Dosis', sans-serif;
 }
 
 .inputNames:focus {
-    transform: scalex(1.2);
-    outline-width: 0;
+    width: 85%;
+}
+.info-text {
+    font-family: 'Dosis', sans-serif;
+    font-weight: bolder;
+}
+.btn-holder {
+    margin-top: 25px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
 }
 
-.btn-holder {
+.back-container {
     width: 100%;
-    height: 25vh;
-    max-height: 300px;
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
 }
-.submitNames {
-    height: 50px;
-    width: 150px;
-    font-size: 1.5em;
-    background-color: rgb(170, 84, 13);
-    color: rgb(255, 255, 255);
-    border: none;
-    box-shadow: 0px 0px 5px 3px black;
-    font-family: 'Yanone Kaffeesatz', sans-serif;
-}
-
-.submitNames:hover {
-    background-color: rgb(177, 107, 50);
-}
 
 
-.startOrder {
-    height: 50px;
-    width: 150px;
-    font-size: 1.5em;
-    background-color: rgb(170, 84, 13);
-    color: rgb(255, 255, 255);
-    border: none;
-    box-shadow: 0px 0px 5px 3px black;
-    font-family: 'Yanone Kaffeesatz', sans-serif;
-}
 
-.startOrder:hover {
-    background-color: rgb(177, 107, 50);
-}
+
+
 
 .game {
     display: none;
-    background-color: rgb(24, 24, 24);
-    height: 100vh;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+
+#game-title {
+    font-family: 'Dosis', sans-serif;
+    font-size: 2em;
 }
 
 .gameboard {
     display: flex;
-    height: 100vh;
-    width: 100vw;
     flex-direction: column;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    height: 70%;
 }
 
 .board {
-    height: 100%;
-    width: 90%;
-    color: white;
-    font-family: 'Anton', sans-serif;
+    height: 65%;
+    width: 85%;
+    font-family: 'Dosis', sans-serif;
+    font-weight: bolder;
     font-size: 4em;
 }
 
 .top-row {
-    height: 15%;
-    max-height: 20vh;
+    min-height: 33%;
     width: 100%;
     display: flex; 
     flex-direction: row;
@@ -257,28 +268,26 @@ button:focus {
 }
 
 .middle-row {
-    height: 15%;
-    max-height: 20vh;
+    min-height: 33%;
     width: 100%;
     display: flex; 
     flex-direction: row;
     flex-wrap: nowrap;
-    border-top: 3px rgb(255, 255, 255) solid;
+    border-top: 3px black solid;
 }
 
 .bottom-row {
-    height: 15%;
-    max-height: 20vh;
+    min-height: 33%;
     display: flex; 
     flex-direction: row;
     flex-wrap: nowrap;
-    border-top: 3px rgb(255, 255, 255) solid;
+    border-top: 3px black solid;
 }
 
 .left {
-    height: 100%;
+
     width: 33%;
-    border-right: 2px rgb(255, 255, 255) solid;
+    border-right: 2px black solid;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -286,10 +295,10 @@ button:focus {
 }
 
 .middle {
-    height: 100%;
+
     width: 33%;
-    border-right: 2px rgb(255, 255, 255) solid;
-    border-left: 2px rgb(255, 255, 255) solid;
+    border-right: 2px black solid;
+    border-left: 2px black solid;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -297,9 +306,9 @@ button:focus {
 }
 
 .right {
-    height: 100%;
+
     width: 33%;
-    border-left: 2px rgb(255, 255, 255) solid;
+    border-left: 2px black solid;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -337,31 +346,19 @@ button:focus {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    font-family: 'Yanone Kaffeesatz', sans-serif;
+    font-family: 'Dosis', sans-serif;
 }
 
 #endGame-controls {
-    height: 50vh;
-    width: 100vw;
+
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    gap: 50px;
     
 }
 
-.endGame-btn{
-    height: 30%;
-    width: 50%;
-    max-height: 100px;
-    max-width: 300px;
-    color: white;
-    background-color: rgb(39, 39, 39);
-    font-size: 2em;
-    border: none;font-family: 'Yanone Kaffeesatz', sans-serif;
-    box-shadow: 0px 0px 5px 3px black;
-    font-family: 'Yanone Kaffeesatz', sans-serif;
-}
 
 #winner {
     font-size: 3em;
@@ -377,101 +374,33 @@ button:focus {
     background-color: rgb(90, 90, 90);
 }
 
-#signature {
+.footer {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: sticky;
-    text-align: center;
-    color: white;
     font-size: 1em;
 }
 
-@media only screen and (min-width: 992px) {
-
-    .numberOfPlayers {
-        height: 20%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-items: center;
-    }
-
-    .top-row {
-        height: 25%;
-        max-height: 20vh;
-        min-height: 150px;
-    }
-    
-    .middle-row {
-        height: 25%;
-        max-height: 20vh;
-        min-height: 150px;
-    }
-    
-    .bottom-row {
-        height: 25%;
-        max-height: 20vh;
-        min-height: 150px;
-    }
-
+@media screen and (min-width: 550px) {
     .board {
-        font-size: 5em;
-    }
+        height: 400px;
+        width: 450px;
 
-    #winner {
-        font-size: 5em;
-    }
-
-} 
-
-@media only screen and (min-width: 1200px) {
-
-    .board {
-        width: 50%;
-        font-size: 7em;
-    }
-    .top-row {
-        height: 25%;
-        max-height: 23vh;
-    }
-    
-    .middle-row {
-        height: 25%;
-        max-height: 23vh;
-    }
-    
-    .bottom-row {
-        height: 25%;
-        max-height: 23vh;
-    }
-
-    .left {
-        width: 33%;
-        max-width: 300px;
-    }
-    
-    .middle {
-        width: 33%;
-        max-width: 300px;
-    }
-    
-    .right {
-        width: 33%;
-        max-width: 300px;
-    }
-
-    #endGame-controls {
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-items: center;
-    }    
-
-}
-
-@media only screen and (min-width: 1900px) {
-    .board {
-        width: 30%;
     }
 }
 
+@media screen and (min-width: 700px) {
+
+    h1 {
+        font-size: 7rem;
+    }
+
+    .tictactoe {
+        height: 350px;
+        width: 500px;
+    }
+
+
+      
+}
